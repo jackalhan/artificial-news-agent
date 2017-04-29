@@ -26,16 +26,15 @@ class MyVocabulary(object):
 
 vocabulary_str = MyVocabulary('../../datasets/raw_data/bbc/test/').__iter__()
 vocabulary_list = []
-vocabulary_list = re.sub("[^\w]", " ",  vocabulary_str).split() #remove quotes and split
+vocabulary_list = re.sub("[^\w]", " ",  vocabulary_str).lower().split() #remove quotes and split
 print(vocabulary_list)
 
 # Read the data into a list of strings.
 
 print('Data size', len(vocabulary_list))
 
-# Step 2: Build the dictionary and replace rare words with UNK token.
+# Step 2: Build the dictionary.
 # UNK is used for unnecessary words.
-
 
 #print('Before bulding the dataset .......')
 
