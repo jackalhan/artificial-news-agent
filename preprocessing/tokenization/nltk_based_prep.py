@@ -2,7 +2,7 @@ import nltk
 import string
 from multiprocessing import Pool,freeze_support
 from itertools import chain
-from gensim.parsing.preprocessing import STOPWORDS
+# from gensim.parsing.preprocessing import STOPWORDS
 import os
 #import sys
 import glob
@@ -10,7 +10,7 @@ import errno
 # Preprocess documents .txt under a given folder.
 import warnings
 
-warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
+# warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 
 def read_file(fname):
     safe_fname = format_filename(fname)
@@ -55,7 +55,7 @@ def prep_bbc(path_file,in_file):
             p.close()
             #------
             # Now remove words that consist of only punctuation characters and Stopwords
-            words2 = [word for word in words2 if word not in STOPWORDS]
+            # words2 = [word for word in words2 if word not in STOPWORDS]
             words2 = [word for word in words2 if not all(char in string.punctuation for char in word)]
             #------
             # Remove contractions - words that begin with '
@@ -73,9 +73,10 @@ if __name__== '__main__':
     punkt = nltk.data.load('tokenizers/punkt/english.pickle')
 
     #stemmer = GermanStemmer()#Join your own directories together.
-    mypaths = ['raw_entertainment']
+    mypaths = ['business']# swith between sub directories under "datasets/raw_data/bbc/", #
+    # do toy experiment on different categories of datasets
     for path_end in mypaths:
-        path = os.path.join("D:\\","dl_experiments","data_processing","bbc",path_end)
+        path = os.path.join("../../datasets/raw_data/bbc/",path_end)
         if os.path.exists(path):
           try:
             os.chdir(path)
