@@ -41,8 +41,8 @@ print('Data size', len(vocabulary_list))
 
 def build_dataset(words, n_words):
   """Process raw inputs into a dataset."""
+  print("Raw Words ==> ", words)
   count = [['UNK', -1]]
-  print(collections.Counter(words).most_common(n_words - 1))
   #most_common function of Counter object is sorting the list based on
   count.extend(collections.Counter(words).most_common(n_words - 1))
 
@@ -76,15 +76,20 @@ def build_dataset(words, n_words):
   # print("Zipped - Reversed Dictionary")
   # print(dict(zip(dictionary.values(), dictionary.keys())))
 
-  # in order to sort dictionary based on values that are frequencies of each key (word)
+  # in order to sort dictionary based on values that are indexes  of each key (word)
   # It is doing it only once which consumes less memory.
   reversed_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
 
   #print(reverse_dictionary)
-  print("Data ==>", data)
-  print("Count ==> ", count)
-  print("Dictionary ==> ", dictionary)
-  print("Reversed Dictionary ==> ", reversed_dictionary)
+  print("\n\n ****** Data (Index of the Words in vocabulary list ) || Numerical representaion of the document ****** ")
+  print("\n",data)
+  print("\n\n ****** Count (Sorted Frequency of the words) ****** ")
+  print("\n",count)
+  print("\n\n ****** Dictionary (value is Index key is word) || Dictionary to map which numerical representation is mapping to what word ******")
+  print("\n",dictionary)
+  print("\n\n ****** Reversed Dictionary (sorted by numerical representation of the words) ****** ")
+  print("\n",reversed_dictionary)
+
   return data, count, dictionary, reversed_dictionary
 
 vocabulary_size = 4000 # to set a size for distinct words in vocabulary
@@ -95,8 +100,8 @@ del vocabulary_str # Hint to reduce memory.
 del vocabulary_list # Hint to reduce memory.
 
 
-print('Most common words (+UNK)', count[:5])
-print('Sample data', data[:10], [reverse_dictionary[i] for i in data[:10]])
+#print('Most common words (+UNK)', count[:5])
+#print('Sample data', data[:10], [reverse_dictionary[i] for i in data[:10]])
 
 data_index = 0
 #
