@@ -2,15 +2,18 @@ import nltk
 import string
 from multiprocessing import Pool,freeze_support
 from itertools import chain
-# from gensim.parsing.preprocessing import STOPWORDS
+from gensim.parsing.preprocessing import STOPWORDS
 import os
 #import sys
 import glob
 import errno
+import scipy
 # Preprocess documents .txt under a given folder.
 import warnings
 
 # warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
+
+base_folder = os.path.dirname(os.path.realpath(__file__))
 
 def read_file(fname):
     safe_fname = format_filename(fname)
@@ -38,9 +41,7 @@ def convert_valid(one_char):
 #======
     #Text preprocessing methods
 #======
-def prep_bbc(path_file,in_file):
-    punkt = nltk.data.load('tokenizers/punkt/english.pickle')
-    #nltk.download('punkt')
+def prep_bbc(path_file,in_file, punkt):
     out_file = read_file(in_file)
     with open(out_file,"w") as y_file:
      with open(path_file, "r") as x_file:
@@ -69,17 +70,18 @@ def prep_bbc(path_file,in_file):
     y_file.close()
 
 if __name__== '__main__':
-    #nltk.download('punkt')
-    #punkt = nltk.data.load('tokenizers/punkt/english.pickle')
+
+    nltk.download('punkt')
+    punkt = nltk.data.load('tokenizers/punkt/english.pickle')
 
     #stemmer = GermanStemmer()#Join your own directories together.
     news_agent = "bbc"
 
-    mypaths = ['business','entertainment','politics','sport','tech']# swith between sub directories under "datasets/raw_data/bbc/", #
-    #mypaths =['test']
+    #mypaths = ['business','entertainment','politics','sport','tech']# swith between sub directories under "datasets/raw_data/bbc/", #
+    mypaths =['test']
     # do toy experiment on different categories of datasets
 
-    base_folder = os.path.dirname(os.path.realpath(__file__))
+
     for path_end in mypaths:
         path = os.path.join(base_folder +r"\..\..\datasets\raw_data",news_agent,path_end)
         if os.path.exists(path):
@@ -88,7 +90,7 @@ if __name__== '__main__':
             for file in glob.glob("*.txt"):
                pathfile = os.path.join(path,file)
                print(pathfile)
-               #prep_bbc(pathfile,file)
+               prep_bbc(pathfile,file,punkt)
               #Do somethinghere
           except errno.ENOENT:
               print("inValid file path")
